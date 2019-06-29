@@ -27,9 +27,9 @@ INCLUDES = -I libft/ -I inc/
 LIB = -L libft/ -lft
 LIBFT_PATH = libft/
 
-SRC = src/main.c src/ft_check_line.c src/utils.c
+SRC = src/main.c src/ft_check_line.c src/ft_utils.c
 
-OBJ = $(addprefix bin/, $(patsubst %.c, %.o, $(SRC)))
+OBJ = $(addprefix obj/, $(patsubst %.c, %.o, $(SRC)))
 
 all: $(NAME)
 
@@ -50,8 +50,8 @@ fclean:
 
 re: fclean all
 
-bin/%.o:%.c
-	@mkdir -p bin/src
+obj/%.o:%.c
+	@mkdir -p obj/src
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 .PHONY: all clean fclean re

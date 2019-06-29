@@ -16,6 +16,19 @@
 # include "libft.h"
 # include <fcntl.h>
 
+
+
+/*
+ * STRUCT ROOM
+ */
+
+typedef	struct	s_room
+{
+	char		*name;
+	struct s_link		*link;
+	struct s_room		*next;
+}				t_room;
+
 /*
  * STRUCT LINK
  */
@@ -25,17 +38,6 @@ typedef	struct	s_link
 	t_room			*r1;
 	t_room			*r2;
 }				t_link;
-
-/*
- * STRUCT ROOM
- */
-
-typedef	struct	s_room
-{
-	char		*name;
-	t_link		*link;
-	t_room		*next;
-}				t_room;
 
 /*
  *  STRUCT GENERAL
@@ -50,6 +52,7 @@ typedef	struct	s_global
 	t_room	*end;
 }				t_global;
 
-void			ft_init(t_global *g);
+void			ft_init_global(t_global *g);
+int				ft_check_line(char *line);
 
 #endif
