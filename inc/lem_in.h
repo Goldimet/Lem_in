@@ -15,8 +15,14 @@
 
 # include "libft.h"
 # include <fcntl.h>
+# include <limits.h>
 
-
+# define ANTS 0
+# define ROOMS 1
+# define LINKS 2
+# define START 3
+# define END 4
+# define INPUT_MEM 5	
 
 /*
  * STRUCT ROOM
@@ -41,12 +47,14 @@ typedef	struct	s_link
 
 /*
  *  STRUCT GENERAL
+ * 
  */
 
 typedef	struct	s_global
 {
 	int		nb_ants;
 	int		size;
+	char	input_mem[INPUT_MEM];
 	t_room	**tab;
 	t_room	*start;
 	t_room	*end;

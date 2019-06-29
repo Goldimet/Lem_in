@@ -38,13 +38,19 @@ int		ft_read_file(int fd, t_global *g)
 {
 	char	*line;
 	int		ret;
-	(void) g;
 
 	line = NULL;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		if (!(ft_check_line(line)))
-			break;
+		if ((ft_check_line(line, g)) == ROOMS)
+			ft_stock_room(g, line);
+		else if ((ft_check_line(line, g)) == LINKS)
+			ft_stock_link(g, line);
+		else if (ft_check_line(line, g) == -1)
+		{
+			free(line);
+			return(0);
+		}
 		free(line);
 	}
 	if (ret == -1)
@@ -54,7 +60,6 @@ int		ft_read_file(int fd, t_global *g)
 
 /*
 ** g stands for the general structure
-** r stands for the linked list of rooms
 */
 
 int		main(int ac, char **av)
@@ -63,12 +68,16 @@ int		main(int ac, char **av)
 	t_global	g;
 
 	if (ac < 2)
-		ft_error("Not enough argument");
+		ft_error("Not enough arguments");
 	if (ac > 2)
-		ft_error("Too much aarguments");
+		ft_error("Too many arguments");
 	if ((fd = open(av[1], O_RDONLY)) < 0)
 		ft_error ("Can't open the file");
 	ft_init_global(&g);
-	ft_read_file(fd, &g);
+	if (!ft_read_file(fd, &g))
+		ft_error("Problem with get_next_line");
+	if (!ft_sufficient_data(&g))
+		ft_error("Error");
+	ft_solver(&g);
 	return (0);
 }

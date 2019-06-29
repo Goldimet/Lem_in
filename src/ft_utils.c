@@ -14,8 +14,13 @@
 
 void    ft_init_global(t_global *g)
 {
+    int i;
+
+    i = 0;
     g->size = 0;
     g->nb_ants = 0;
+    while (i < INPUT_MEM)
+        g->input_mem[i++] = 0;
     g->start = NULL;
     g->end = NULL;
     g->tab = NULL;
