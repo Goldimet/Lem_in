@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-void    ft_init(t_gen *g)
+void    ft_init_global(t_global *g)
 {
     g->size = 0;
     g->nb_ants = 0;

@@ -12,23 +12,23 @@
 
 #include "lem_in.h"
 
-static	int		check_integer(char *str, int *num)
-{
-	int		sign;
-	int		len;
+// static	int		check_integer(char *str, int *num)
+// {
+// 	int		sign;
+// 	int		len;
 
-	*num = ft_atoi(str);
-	if ((sign = *str == '-'))
-		str++;
-	if (!ft_isnumber(str))
-		return (0);
-	while (*str == '0')
-		str++;
-	len = ft_strlen(str);
-	if (len > 10 || (len == 10 && *str > '2'))
-		return (0);
-	return (!((sign && *num > 0) || (!sign && *num < 0)));
-}
+// 	*num = ft_atoi(str);
+// 	if ((sign = *str == '-'))
+// 		str++;
+// 	if (!ft_isnumber(str))
+// 		return (0);
+// 	while (*str == '0')
+// 		str++;
+// 	len = ft_strlen(str);
+// 	if (len > 10 || (len == 10 && *str > '2'))
+// 		return (0);
+// 	return (!((sign && *num > 0) || (!sign && *num < 0)));
+// }
 
 /*
 ** read inside a file and fill informations
@@ -38,12 +38,14 @@ int		ft_read_file(int fd, t_global *g)
 {
 	char	*line;
 	int		ret;
+	(void) g;
 
 	line = NULL;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		if (!(ft_check_line(line)))
 			break;
+		free(line);
 	}
 	if (ret == -1)
 		return (0);
@@ -58,7 +60,6 @@ int		ft_read_file(int fd, t_global *g)
 int		main(int ac, char **av)
 {
 	int		fd;
-	char	*line;
 	t_global	g;
 
 	if (ac < 2)
@@ -67,7 +68,7 @@ int		main(int ac, char **av)
 		ft_error("Too much aarguments");
 	if ((fd = open(av[1], O_RDONLY)) < 0)
 		ft_error ("Can't open the file");
-	ft_init(&g);
+	ft_init_global(&g);
 	ft_read_file(fd, &g);
 	return (0);
 }
