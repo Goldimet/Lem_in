@@ -6,7 +6,7 @@
 #    By: rkamegne <rkamegne@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/22 17:12:26 by rkamegne          #+#    #+#              #
-#    Updated: 2019/06/29 21:03:41 by rkamegne         ###   ########.fr        #
+#    Updated: 2019/06/29 21:30:59 by rkamegne         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,33 +25,38 @@ NAME = lem-in
 INCLUDES = -I libft/ -I inc/
 
 LIB = -L libft/ -lft
+LIBFT = libft.a
 LIBFT_PATH = libft/
 
 SRC = src/main.c src/ft_check_line.c src/ft_utils.c
+SRC_LFT = $(wildcard libft/*.c)
 
 OBJ = $(addprefix obj/, $(patsubst %.c, %.o, $(SRC)))
+OBJ_LFT = $(SRC_LFT:.c=.o)
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
+
+$(LIBFT): $(OBJ_LFT)
+	@make -C $(LIBFT_PATH)
 
 $(NAME): $(OBJ)
-	make -C $(LIBFT_PATH)
-	$(CC) -o $@ $^ $(LIB)
+	@$(CC) -o $@ $^ $(LIB)
 	@echo "\n$(GREEN)[$(NAME) created]$(BLACK)"
 
 clean:
-	make -C $(LIBFT_PATH) clean
-	rm -rf $(OBJ)
+	@make -C $(LIBFT_PATH) clean
+	@rm -rf obj/
 	@echo "\n$(RED)[.o deleted]$(BLACK)"
 
 fclean: clean
-	make -C $(LIBFT_PATH) fclean
-	rm -rf $(NAME)
+	@make -C $(LIBFT_PATH) fclean
+	@rm -rf $(NAME)
 	@echo "\n$(RED)[$(NAME) deleted]$(BLACK)"
 
 re: fclean all
 
 obj/%.o:%.c
 	@mkdir -p obj/src
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 .PHONY: all clean fclean re
