@@ -43,7 +43,7 @@ clean:
 	rm -rf $(OBJ)
 	@echo "\n$(RED)[.o deleted]$(BLACK)"
 
-fclean:
+fclean: clean
 	make -C $(LIBFT_PATH) fclean
 	rm -rf $(NAME)
 	@echo "\n$(RED)[$(NAME) deleted]$(BLACK)"
