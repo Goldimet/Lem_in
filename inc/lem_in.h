@@ -17,12 +17,22 @@
 # include <fcntl.h>
 # include <limits.h>
 
+/*
+** Indexes to g->input_memory, INPUT_MEM est le nombre d indexes
+*/
 # define ANTS 0
 # define ROOMS 1
 # define LINKS 2
 # define START 3
 # define END 4
-# define INPUT_MEM 5	
+# define INPUT_MEM 5
+
+/* 
+** Return values of ft_check_line + les define precedents pour ROOM et LINK
+*/
+
+# define SKIP 0
+# define STOP_READ -1
 
 /*
  * STRUCT ROOM
@@ -61,6 +71,7 @@ typedef	struct	s_global
 }				t_global;
 
 void			ft_init_global(t_global *g);
-int				ft_check_line(char *line);
+int				ft_check_if_int(char *str, char stop);
+int				ft_check_line(t_global *g, char *line);
 
 #endif

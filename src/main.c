@@ -12,48 +12,35 @@
 
 #include "lem_in.h"
 
-// static	int		check_integer(char *str, int *num)
-// {
-// 	int		sign;
-// 	int		len;
-
-// 	*num = ft_atoi(str);
-// 	if ((sign = *str == '-'))
-// 		str++;
-// 	if (!ft_isnumber(str))
-// 		return (0);
-// 	while (*str == '0')
-// 		str++;
-// 	len = ft_strlen(str);
-// 	if (len > 10 || (len == 10 && *str > '2'))
-// 		return (0);
-// 	return (!((sign && *num > 0) || (!sign && *num < 0)));
-// }
-
 /*
-** read inside a file and fill informations
+** read a file line by line. If line is a room or a link, line is saved.
+** if line is not good, stop read. Else (comment or ANT), keep read.
 */
 
 int		ft_read_file(int fd, t_global *g)
 {
 	char	*line;
-	int		ret;
+	int		ret_gnl;
+	int		ret_chl;
 
 	line = NULL;
-	while ((ret = get_next_line(fd, &line)) > 0)
+	while ((ret_gnl = get_next_line(fd, &line)) > 0)
 	{
-		if ((ft_check_line(line, g)) == ROOMS)
-			ft_stock_room(g, line);
-		else if ((ft_check_line(line, g)) == LINKS)
-			ft_stock_link(g, line);
-		else if (ft_check_line(line, g) == -1)
+		ret_chl = ft_check_line(g, line);
+		if (ret_chl == ROOMS)
+			if (!ft_stock_room(g, line))
+				ft_error("at least two rooms with same name");
+		else if ((ret_chl == LINKS)
+			if (!ft_stock_link(g, line))
+				ft_error("at least two identical links");
+		else if (ret_chl == STOP_READ)
 		{
 			free(line);
-			return(0);
+			return(1);
 		}
 		free(line);
 	}
-	if (ret == -1)
+	if (ret_gnl == -1)
 		return (0);
 	return (1);
 }
