@@ -15,6 +15,7 @@
 /*
 **	WHAT IT DOES
 ** Check if line est bien un Link. Return 1 si oui, 0 sinon.
+** Les deux rooms sont stored dans tmp_link_r1 et r2 pour ft_stock_link.
 */
 
 static int		ft_is_link(t_global *g, char *line)
@@ -36,12 +37,14 @@ static int		ft_is_link(t_global *g, char *line)
 /*
 **	WHAT IT DOES
 ** Check if line est bien une Room. Return 1 si oui, 0 sinon.
+** Name of Room is stored in g->tmp_room pour ft_stock_room.
 */
 
 static int		ft_is_room(t_global *g, char *line)
 {
 	int i;
 
+	ft_printf("line de ft_room = %s\n", line);
 	i = 0;
 	if (*line == 'l' || *line == 'L')
 		return (0);
@@ -53,11 +56,11 @@ static int		ft_is_room(t_global *g, char *line)
 	g->tmp_room = ft_strndup(line, i);
 	if (line[i++] != ' ')
 		return (0);
-	if (ft_check_if_int(line, ' '))
+	if (!ft_check_if_int(line + i, ' '))
 		return (0);
 	while (line[i] != ' ')
-		i++; 
-	if (!ft_check_if_int(line, '\0'))
+		i++;
+	if (!ft_check_if_int(line + i + 1, '\0'))
 		return(0);
 	return (1);
 }
@@ -73,10 +76,10 @@ static	int		ft_is_ants(t_global *g, char *line)
 	int nb;
 
 	if (!ft_check_if_int(line, '\0'))
-		ft_error("ERROR");
+		ft_error("ERROR ant 1");
 	nb = ft_atoi(line);
-	if (nb < 0)
-		ft_error("ERROR");		
+	if (nb <= 0)
+		ft_error("ERROR ant 2");		
 	g->nb_ants = nb;
 	return (1);
 }
@@ -109,7 +112,7 @@ static int		ft_check_line_bis(t_global *g, char *line)
 
 /*
 **	WHAT IT DOES
-** -> Si SART ou ENd est init, il faut absolument que la ligne soit un comment,
+** -> Si START ou END est init, il faut absolument que la ligne soit un comment,
 ** command ou room valide. Sinon error.
 ** -> Skip les comments et command invalides, si START ou END, init START END
 ** -> Check le reste avec ft_check_line_bis
@@ -119,11 +122,10 @@ int				ft_check_line(t_global *g, char *line)
 {
 	if ((g->input_mem[START] == 1 || g->input_mem[END] == 1) && *line != '#')
 	{
-		ft_printf("OK\n");
 		if (g->input_mem[ROOMS] || !g->input_mem[ANTS])
-			ft_error("ERROR");
+			ft_error("ERROR input[ROOMS ou ANT]");
 		if (!ft_is_room(g, line))
-				ft_error("ERROR");
+				ft_error("ERROR pas Room start end");
 		return (ROOMS);
 	}
 	if (*line == '#')

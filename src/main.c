@@ -39,11 +39,11 @@ int		ft_read_file(int fd, t_global *g)
 		}
 		if (ret_chl == STOP_READ)
 		{
-			ft_printf("line d Error is %s", line);
+			ft_printf("line d Error is %s\n", line);
 			if (g->input_mem[ANTS])
-				ft_printf("ANTS ATIVATED\n");
+				ft_printf("ANTS ACTIVATED\n");
 			if (g->input_mem[ROOMS])
-				ft_printf("ROOMS ATIVATED\n");
+				ft_printf("ROOMS ACTIVATED\n");
 			break;
 		}
 		free(line);
