@@ -27,24 +27,28 @@ INCLUDES = -I libft/ -I inc/
 LIB = -L libft/ -lft
 LIBFT_PATH = libft/
 
-SRC = src/main.c src/ft_check_line.c src/ft_utils.c
+SRC_NAME = main.c ft_check_line.c ft_utils.c ft_free.c
+
+SRC_PATH = ./src/
+
+SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 
 OBJ = $(addprefix obj/, $(patsubst %.c, %.o, $(SRC)))
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C $(LIBFT_PATH)
+	@make -C $(LIBFT_PATH)
 	$(CC) -o $@ $^ $(LIB)
 	@echo "\n$(GREEN)[$(NAME) created]$(BLACK)"
 
 clean:
-	make -C $(LIBFT_PATH) clean
+	@make -C $(LIBFT_PATH) clean
 	rm -rf $(OBJ)
 	@echo "\n$(RED)[.o deleted]$(BLACK)"
 
 fclean: clean
-	make -C $(LIBFT_PATH) fclean
+	@make -C $(LIBFT_PATH) fclean
 	rm -rf $(NAME)
 	@echo "\n$(RED)[$(NAME) deleted]$(BLACK)"
 

@@ -57,7 +57,6 @@ typedef	struct	s_link
 
 /*
  *  STRUCT GENERAL
- * 
  */
 
 typedef	struct	s_global
@@ -65,6 +64,10 @@ typedef	struct	s_global
 	int		nb_ants;
 	int		size;
 	char	input_mem[INPUT_MEM];
+	char	*tmp_room;
+	char	*tmp_link_r1;
+	char	*tmp_link_r2;
+	char	*link;
 	t_room	**tab;
 	t_room	*start;
 	t_room	*end;
@@ -73,5 +76,7 @@ typedef	struct	s_global
 void			ft_init_global(t_global *g);
 int				ft_check_if_int(char *str, char stop);
 int				ft_check_line(t_global *g, char *line);
+void			ft_free_g_tmp(t_global *g);
+
 
 #endif

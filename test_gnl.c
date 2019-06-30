@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   test_gnl.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkamegne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agilmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/05 15:56:42 by rkamegne          #+#    #+#             */
-/*   Updated: 2019/06/30 18:32:26 by agilmet          ###   ########.fr       */
+/*   Created: 2019/06/30 19:08:16 by agilmet           #+#    #+#             */
+/*   Updated: 2019/06/30 19:14:26 by agilmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcat(char *s1, const char *s2)
-{
-	int		i;
-	int		j;
+#include <stdio.h>
+#include <fcntl.h>
+#include "libft/libft.h"
 
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-		i++;
-	while (s2[j] != '\0')
+int main(int argc, char**argv)
+{
+	int fd;
+	int ret;
+	char *line;
+
+	fd = open(argv[1], O_RDONLY);
+	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		s1[i] = s2[j];
-		i++;
-		j++;
+		printf("%s\n", line);
 	}
-	s1[i] = '\0';
-	return (s1);
+
+	return (0);
 }

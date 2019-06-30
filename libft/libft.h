@@ -6,7 +6,7 @@
 /*   By: rkamegne <rkamegne@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/12 21:45:21 by rkamegne          #+#    #+#             */
-/*   Updated: 2019/06/25 11:21:28 by rkamegne         ###   ########.fr       */
+/*   Updated: 2019/06/30 17:33:53 by agilmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,4 +151,6 @@ int					ft_lstlen(t_list *list);
 void				ft_free_content(void *content, size_t content_size);
 int					ft_isnumber(char *str);
 void				ft_error(char *str);
+long long			ft_atollong(const char *str);
+char				*ft_strndup(const char *s1, size_t n);
 #endif

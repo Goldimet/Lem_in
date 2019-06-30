@@ -28,21 +28,29 @@ int		ft_read_file(int fd, t_global *g)
 	{
 		ret_chl = ft_check_line(g, line);
 		if (ret_chl == ROOMS)
-			if (!ft_stock_room(g, line))
-				ft_error("at least two rooms with same name");
-		else if ((ret_chl == LINKS)
-			if (!ft_stock_link(g, line))
-				ft_error("at least two identical links");
-		else if (ret_chl == STOP_READ)
 		{
-			free(line);
-			return(1);
+			//if (!ft_stock_room(g))
+			//	break;
+		}
+		if (ret_chl == LINKS)
+		{
+			//if (!ft_stock_link(g))
+			//	break;
+		}
+		if (ret_chl == STOP_READ)
+		{
+			ft_printf("line d Error is %s", line);
+			if (g->input_mem[ANTS])
+				ft_printf("ANTS ATIVATED\n");
+			if (g->input_mem[ROOMS])
+				ft_printf("ROOMS ATIVATED\n");
+			break;
 		}
 		free(line);
 	}
-	if (ret_gnl == -1)
-		return (0);
-	return (1);
+	if (line)
+		free(line);
+	return (ret_gnl);
 }
 
 /*
@@ -61,10 +69,11 @@ int		main(int ac, char **av)
 	if ((fd = open(av[1], O_RDONLY)) < 0)
 		ft_error ("Can't open the file");
 	ft_init_global(&g);
-	if (!ft_read_file(fd, &g))
+	if (ft_read_file(fd, &g) == -1)
 		ft_error("Problem with get_next_line");
-	if (!ft_sufficient_data(&g))
-		ft_error("Error");
-	ft_solver(&g);
+	ft_free_g_tmp(&g);
+	// if (!ft_sufficient_data(&g))
+	// 	ft_error("Error");
+	// ft_solver(&g);
 	return (0);
 }

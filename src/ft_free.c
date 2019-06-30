@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkamegne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agilmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/05 15:56:42 by rkamegne          #+#    #+#             */
-/*   Updated: 2019/06/30 18:32:26 by agilmet          ###   ########.fr       */
+/*   Created: 2019/06/30 17:47:03 by agilmet           #+#    #+#             */
+/*   Updated: 2019/06/30 17:47:12 by agilmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcat(char *s1, const char *s2)
-{
-	int		i;
-	int		j;
+#include "lem_in.h"
 
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-		i++;
-	while (s2[j] != '\0')
-	{
-		s1[i] = s2[j];
-		i++;
-		j++;
-	}
-	s1[i] = '\0';
-	return (s1);
+void    ft_free_g_tmp(t_global *g)
+{
+    if (g->tmp_link_r1)
+        free(g->tmp_link_r1);
+    if (g->tmp_link_r2)
+        free(g->tmp_link_r2);
+    if (g->tmp_room)
+        free(g->tmp_room);
 }

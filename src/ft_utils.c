@@ -21,6 +21,9 @@ void    ft_init_global(t_global *g)
     g->nb_ants = 0;
     while (i < INPUT_MEM)
         g->input_mem[i++] = 0;
+    g->tmp_room = NULL;
+    g->tmp_link_r1 = NULL;
+    g->tmp_link_r2 = NULL;
     g->start = NULL;
     g->end = NULL;
     g->tab = NULL;
