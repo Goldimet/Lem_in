@@ -3,29 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkamegne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agilmet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/08 12:52:43 by rkamegne          #+#    #+#             */
-/*   Updated: 2019/04/06 18:15:52 by rkamegne         ###   ########.fr       */
+/*   Created: 2018/10/08 22:09:27 by agilmet           #+#    #+#             */
+/*   Updated: 2019/04/23 10:53:36 by agilmet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** WHAT IT DOES
+**    locates first occurence of "c" in "s". Remarque : locates \0  si c = \0
+**
+** RETURN
+**    pointer to located char, or NULL si pas trouve.
+*/
 #include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
-	int		i;
-
-	i = 0;
-	while (s[i])
+	if (s == NULL)
+		return (0);
+	while (*s)
 	{
-		if (s[i] == c)
-			return ((char*)&s[i]);
-		if (ft_isalpha(s[i]))
-			break ;
-		i++;
+		if (*s == (const char)c)
+			return ((char*)s);
+		s++;
 	}
-	if (c == 0)
-		return ((char*)&s[i]);
-	return (NULL);
+	if (*s == (const char)c)
+		return ((char*)s);
+	else
+		return (0);
 }

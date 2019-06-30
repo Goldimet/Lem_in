@@ -27,7 +27,9 @@ SRC = ft_lstdel.c ft_putendl_fd.c ft_strdel.c ft_strnequ.c ft_atoi.c ft_lstdelon
 	ft_conver_numbers.c ft_unsigned_numbers.c ft_unsigned_numbers2.c ft_float_numbers.c ft_lstaddback.c\
 	ft_lstlen.c ft_free_content.c ft_isnumber.c ft_error.c ft_atollong.c ft_strndup.c
 
-OBJ = $(SRC:.c=.o)
+OBJ_PATH = ./obj/
+OBJ_NAME = $(SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -36,13 +38,15 @@ CC = gcc
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -c $(SRC)
 	@ar -rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
+$(OBJ_PATH)%.o: %.c $(INC)
+	@mkdir -p $(OBJ_PATH)
+	gcc -c $< -o $@ $(CFLAGS)
 
 clean:
-	@/bin/rm -f $(OBJ)
+	@/bin/rm -rf $(OBJ_PATH)
 
 fclean: clean
 	@/bin/rm -f $(NAME)

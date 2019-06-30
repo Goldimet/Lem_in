@@ -18,11 +18,9 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdint.h>
+# include <limits.h>
 # define TYPES "%cfspdiouUxXb"
-# define BUFF_SIZE 1
-# ifndef OPEN_MAX
-#  define OPEN_MAX 4986
-# endif
+# define BUFF_SIZE 32
 
 typedef struct		s_list
 {
