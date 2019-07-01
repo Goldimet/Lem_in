@@ -12,49 +12,49 @@
 
 #include "lem_in.h"
 
-// static	int		check_integer(char *str, int *num)
-// {
-// 	int		sign;
-// 	int		len;
-
-// 	*num = ft_atoi(str);
-// 	if ((sign = *str == '-'))
-// 		str++;
-// 	if (!ft_isnumber(str))
-// 		return (0);
-// 	while (*str == '0')
-// 		str++;
-// 	len = ft_strlen(str);
-// 	if (len > 10 || (len == 10 && *str > '2'))
-// 		return (0);
-// 	return (!((sign && *num > 0) || (!sign && *num < 0)));
-// }
-
 /*
-** read inside a file and fill informations
+** read a file line by line. If line is a room or a link, line is saved.
+** if line is not good, stop read. Else (comment or ANT), keep read.
 */
 
 int		ft_read_file(int fd, t_global *g)
 {
 	char	*line;
-	int		ret;
-	(void) g;
+	int		ret_gnl;
+	int		ret_chl;
 
 	line = NULL;
-	while ((ret = get_next_line(fd, &line)) > 0)
+	while ((ret_gnl = get_next_line(fd, &line)) > 0)
 	{
-		if (!(ft_check_line(line)))
+		ret_chl = ft_check_line(g, line);
+		if (ret_chl == ROOMS)
+		{
+			//if (!ft_stock_room(g))
+			//	break;
+		}
+		if (ret_chl == LINKS)
+		{
+			//if (!ft_stock_link(g))
+			//	break;
+		}
+		if (ret_chl == STOP_READ)
+		{
+			ft_printf("line d Error is %s\n", line);
+			if (g->input_mem[ANTS])
+				ft_printf("ANTS ACTIVATED\n");
+			if (g->input_mem[ROOMS])
+				ft_printf("ROOMS ACTIVATED\n");
 			break;
+		}
 		free(line);
 	}
-	if (ret == -1)
-		return (0);
-	return (1);
+	if (line)
+		free(line);
+	return (ret_gnl);
 }
 
 /*
 ** g stands for the general structure
-** r stands for the linked list of rooms
 */
 
 int		main(int ac, char **av)
@@ -63,12 +63,17 @@ int		main(int ac, char **av)
 	t_global	g;
 
 	if (ac < 2)
-		ft_error("Not enough argument");
+		ft_error("Not enough arguments");
 	if (ac > 2)
-		ft_error("Too much aarguments");
+		ft_error("Too many arguments");
 	if ((fd = open(av[1], O_RDONLY)) < 0)
 		ft_error ("Can't open the file");
 	ft_init_global(&g);
-	ft_read_file(fd, &g);
+	if (ft_read_file(fd, &g) == -1)
+		ft_error("Problem with get_next_line");
+	ft_free_g_tmp(&g);
+	// if (!ft_sufficient_data(&g))
+	// 	ft_error("Error");
+	// ft_solver(&g);
 	return (0);
 }
