@@ -6,7 +6,7 @@
 /*   By: rkamegne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 12:35:54 by rkamegne          #+#    #+#             */
-/*   Updated: 2019/01/29 18:15:40 by krutten          ###   ########.fr       */
+/*   Updated: 2019/07/01 13:18:14 by rkamegne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			get_next_line(const int fd, char **line)
 		ft_strdel(&str[fd]);
 		return (0);
 	}
-	if ((i = (ft_strchr(str[fd], '\n') != 0)))
+	if ((i = (ft_strchr(str[fd], '\n') > 0)))
 		*line = ft_strsub(str[fd], 0, ft_strchr(str[fd], '\n') - str[fd]);
 	else
 		*line = ft_strdup(str[fd]);
