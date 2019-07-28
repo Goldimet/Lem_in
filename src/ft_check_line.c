@@ -15,7 +15,7 @@
 /*
 **	WHAT IT DOES
 ** Check if line est bien un Link. Return 1 si oui, 0 sinon.
-** Les deux rooms sont stored dans tmp_link_r1 et r2 pour ft_stock_link.
+** Les deux rooms sont stored dans tmp_link_n1 et r2 pour ft_stock_link.
 */
 
 static int		ft_is_link(t_global *g, char *line)
@@ -25,19 +25,19 @@ static int		ft_is_link(t_global *g, char *line)
 	i = 0;
 	while (line[i] && line[i] != '-')
 		i++;
-	g->tmp_link_r1 = ft_strndup(line, i);
+	g->tmp_link_n1 = ft_strndup(line, i);
 	if (!line[i++])
 		return (0);
 	if (!line[i])
 		return (0);
-	g->tmp_link_r2 = ft_strdup(line + i);
+	g->tmp_link_n2 = ft_strdup(line + i);
 	return (1);
 }
 
 /*
 **	WHAT IT DOES
 ** Check if line est bien une Room. Return 1 si oui, 0 sinon.
-** Name of Room is stored in g->tmp_room pour ft_stock_room.
+** Name of Room is stored in g->tmp_node pour ft_stock_room.
 */
 
 static int		ft_is_room(t_global *g, char *line)
@@ -53,7 +53,7 @@ static int		ft_is_room(t_global *g, char *line)
 		if (line[i++] == '-')
 			return(0);
 	}
-	g->tmp_room = ft_strndup(line, i);
+	g->tmp_node = ft_strndup(line, i);
 	if (line[i++] != ' ')
 		return (0);
 	if (!ft_check_if_int(line + i, ' '))
@@ -93,18 +93,18 @@ static	int		ft_is_ants(t_global *g, char *line)
 
 static int		ft_check_line_bis(t_global *g, char *line)
 {
-	if (!g->input_mem[ANTS])
+	if (!g->input_order[ANTS])
 	{
 		ft_is_ants(g, line);
-		g->input_mem[ANTS] = 1;
+		g->input_order[ANTS] = 1;
 		return (SKIP);
 	}
-	if (!g->input_mem[ROOMS])
+	if (!g->input_order[ROOMS])
 	{
 		if (ft_is_room(g, line))
 			return (ROOMS);
 	}
-	g->input_mem[ROOMS] = 1;
+	g->input_order[ROOMS] = 1;
 	if (ft_is_link(g, line))
 		return (LINKS);
 	return (STOP_READ);
@@ -120,9 +120,9 @@ static int		ft_check_line_bis(t_global *g, char *line)
 
 int				ft_check_line(t_global *g, char *line)
 {
-	if ((g->input_mem[START] == 1 || g->input_mem[END] == 1) && *line != '#')
+	if ((g->input_order[START] == 1 || g->input_order[END] == 1) && *line != '#')
 	{
-		if (g->input_mem[ROOMS] || !g->input_mem[ANTS])
+		if (g->input_order[ROOMS] || !g->input_order[ANTS])
 			ft_error("ERROR input[ROOMS ou ANT]");
 		if (!ft_is_room(g, line))
 				ft_error("ERROR pas Room start end");
@@ -134,13 +134,13 @@ int				ft_check_line(t_global *g, char *line)
 		{
 			if (g->start)
 				return (STOP_READ);
-			g->input_mem[START] = 1;
+			g->input_order[START] = 1;
 		}
 		else if (ft_strequ(line, "##end"))
 		{
 			if (g->end)
 				return (STOP_READ);
-			g->input_mem[END] = 1;
+			g->input_order[END] = 1;
 		}
 		return (SKIP);
 	}

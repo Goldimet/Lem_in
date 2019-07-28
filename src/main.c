@@ -40,9 +40,9 @@ int		ft_read_file(int fd, t_global *g)
 		if (ret_chl == STOP_READ)
 		{
 			ft_printf("line d Error is %s\n", line);
-			if (g->input_mem[ANTS])
+			if (g->input_order[ANTS])
 				ft_printf("ANTS ACTIVATED\n");
-			if (g->input_mem[ROOMS])
+			if (g->input_order[ROOMS])
 				ft_printf("ROOMS ACTIVATED\n");
 			break;
 		}
@@ -59,7 +59,7 @@ int		ft_read_file(int fd, t_global *g)
 
 int		main(int ac, char **av)
 {
-	int		fd;
+	int			fd;
 	t_global	g;
 
 	if (ac < 2)
@@ -68,10 +68,9 @@ int		main(int ac, char **av)
 		ft_error("Too many arguments");
 	if ((fd = open(av[1], O_RDONLY)) < 0)
 		ft_error ("Can't open the file");
-	ft_init_global(&g);
+	ft_bzero(&g, sizeof(t_global));
 	if (ft_read_file(fd, &g) == -1)
 		ft_error("Problem with get_next_line");
-	ft_free_g_tmp(&g);
 	// if (!ft_sufficient_data(&g))
 	// 	ft_error("Error");
 	// ft_solver(&g);

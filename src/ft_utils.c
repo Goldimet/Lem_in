@@ -12,22 +12,22 @@
 
 #include "lem_in.h"
 
-void    ft_init_global(t_global *g)
+/* void    ft_init_global(t_global *g)
 {
     int i;
 
     i = 0;
     g->size = 0;
     g->nb_ants = 0;
-    while (i < INPUT_MEM)
-        g->input_mem[i++] = 0;
-    g->tmp_room = NULL;
-    g->tmp_link_r1 = NULL;
-    g->tmp_link_r2 = NULL;
+    while (i < INPUT_ORDER_SIZE)
+        g->input_order[i++] = 0;
+    g->tmp_node = NULL;
+    g->tmp_link_n1 = NULL;
+    g->tmp_link_n2 = NULL;
     g->start = NULL;
     g->end = NULL;
     g->tab = NULL;
-}
+} */
 
 /*
 ** Check if str est bien un INT avant d arriver sur caractere stop.

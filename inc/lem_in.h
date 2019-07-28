@@ -17,15 +17,16 @@
 # include <fcntl.h>
 # include <limits.h>
 
+# define NODE_ARR_SIZE 50
 /*
-** Indexes to g->input_memory, INPUT_MEM est le nombre d indexes
+** Indexes to g->input_order, INPUT_ORDER_SIZE est le nombre d indexes
 */
 # define ANTS 0
 # define ROOMS 1
 # define LINKS 2
 # define START 3
 # define END 4
-# define INPUT_MEM 5
+# define INPUT_ORDER_SIZE 5
 
 /* 
 ** Return values of ft_check_line + les define precedents pour ROOM et LINK
@@ -38,10 +39,10 @@
  * STRUCT ROOM
  */
 
-typedef	struct	s_room
+typedef	struct	s_rooom
 {
-	char		*name;
-	struct s_link		*link;
+	char				*name;
+	struct s_links		*links;
 	struct s_room		*next;
 }				t_room;
 
@@ -49,11 +50,12 @@ typedef	struct	s_room
  * STRUCT LINK
  */
 
-typedef	struct	s_link
+typedef	struct	s_links
 {
-	t_room			*r1;
-	t_room			*r2;
-}				t_link;
+	t_room				*node;
+	t_room				*next;
+}				t_links;
+
 
 /*
  *  STRUCT GENERAL
@@ -62,21 +64,52 @@ typedef	struct	s_link
 typedef	struct	s_global
 {
 	int		nb_ants;
-	int		size;
-	char	input_mem[INPUT_MEM];
-	char	*tmp_room;
-	char	*tmp_link_r1;
-	char	*tmp_link_r2;
-	char	*link;
-	t_room	**tab;
+	char	input_order[INPUT_ORDER_SIZE];
+	t_room	*node_arr[NODE_ARR_SIZE];
 	t_room	*start;
 	t_room	*end;
+	char	*tmp_node;
+	char	*tmp_link_n1;
+	char	*tmp_link_n2;
+	
 }				t_global;
 
-void			ft_init_global(t_global *g);
+//void			ft_init_global(t_global *g);
 int				ft_check_if_int(char *str, char stop);
 int				ft_check_line(t_global *g, char *line);
 void			ft_free_g_tmp(t_global *g);
+unsigned long	ft_hash(char *str);
+int				ft_stock_room(t_global *g);
+
 
 
 #endif
+
+#define UNIDIR1 1
+#define UNIDIR2 2
+#define BIDIR  UNIDIR1 + UNIDIR2
+
+
+typedef struct s_room_link
+{
+	t_room		*node;
+	t_room_link *next;
+}				t_room_link;
+
+typedef struct s_room
+{
+	char		*name;
+	int			hash;
+	t_edge		**edge;
+	int			nb_edge;
+	...
+}				t_room;
+
+typedef struct s_edge
+{
+	t_room	*node1;
+	t_room	*node2;
+	int		dir;
+	int		w1;
+	int		w2;
+}				t_edge;
